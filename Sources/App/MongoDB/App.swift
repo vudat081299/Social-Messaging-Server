@@ -70,7 +70,7 @@ func registerRoutes(to app: Application) {
     app.get { request -> EventLoopFuture<View> in
         // Get the "server" cookie's string value
         guard let token = request.cookies["server"]?.string else {
-            return request.view.render("login")
+            return request.view.render("MongoDB/loginMongoDB")
         }
         
         let accessToken = try request.application.jwt.verify(token, as: AccessToken.self)
@@ -91,7 +91,7 @@ func registerRoutes(to app: Application) {
                 suggestedUsers: suggestedUsers
             )
             
-            return request.view.render("index", context)
+            return request.view.render("MongoDB/indexMongoDB", context)
         }
     }
     
@@ -107,7 +107,7 @@ func registerRoutes(to app: Application) {
                     let user = user,
                     try user.credentials.matchesPassword(credentials.password)
                 else {
-                    return request.view.render("login", [
+                    return request.view.render("MongoDB/loginMongoDB", [
                         "error": "Incorrect credentials"
                     ]).flatMap { view in
                         return view.encodeResponse(for: request)

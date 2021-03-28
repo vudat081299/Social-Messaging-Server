@@ -1,10 +1,11 @@
+const host = "localhost"
 function call (method, url, data){
     console.log("call result", method, url, data)
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         console.log("call result", this)
         if (this.readyState == 4 && this.status == 200) {
-            // document.getElementById("feedback").innerHTML = this.responseText;
+             document.getElementById("feedback").innerHTML = this.responseText;
         }
     };
 
@@ -19,13 +20,13 @@ function handleLogin(){
     data.email = document.getElementById("email").value
     data.password = document.getElementById("password").value
 
-    call("POST", "http://localhost/jsonbin", data)
+    call("POST", "http://${host}/jsonbin", data)
 }
 
 function handleConnect(id, withWho){
     let data = {id:id, with:withWho}
 
-    call("POST", "http://localhost/jsonbin", data)
+    call("POST", "http://${host}/jsonbin", data)
 }
 
 function handlePost(){
@@ -39,7 +40,7 @@ function handlePost(){
         // convert image file to base64 string
         data.upload = reader.result
 
-        call("POST", "http://localhost/jsonbin", data)
+        call("POST", "http://${host}/jsonbin", data)
     }, false);
 
     reader.readAsDataURL(data.file)

@@ -54,7 +54,7 @@ struct ResolvedTimelinePost: Codable {
     let text: String
     let creationDate: Date
     let fileId: ObjectId?
-    let creator: User
+    let creator: UserMongoDB
 }
 
 struct CreatePost: Codable {
