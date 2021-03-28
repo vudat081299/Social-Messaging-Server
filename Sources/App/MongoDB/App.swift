@@ -128,8 +128,52 @@ func registerRoutes(to app: Application) {
         }
     }
     
+    
+    
+    func listFileStructure (_ currentPath: String, _ path: String = "") {
+        let fm = FileManager.default
+        var fullPath = currentPath + path
+        var a = fullPath.last!
+        if a == Character("/") {
+            
+        } else {
+            fullPath += "/"
+        }
+        print("---")
+//        print(currentPath)
+//        print(path)
+        do {
+            let items = try fm.contentsOfDirectory(atPath: fullPath)
+            print("\(currentPath)\(path)")
+
+            for item in items {
+//                let isDir = (try URL(fileURLWithPath: fullPath).resourceValues(forKeys: [.isDirectoryKey])).isDirectory
+                listFileStructure(fullPath, item)
+            }
+        } catch {
+            // failed to read directory – bad permissions, perhaps?
+            print("\(fullPath)")
+        }
+    }
+    
+//    func listDir(dir: String) {
+//        // Create a FileManager instance
+//        let contentsOfCurrentWorkingDirectory = try?FileManager.default.contentsOfDirectory(at: URL(fileURLWithPath: dir), includingPropertiesForKeys: nil, options: [])
+//
+//        // process files
+//        contentsOfCurrentWorkingDirectory?.forEach() { url in
+//
+//            contentsOfCurrentWorkingDirectory?.forEach() { url2 in
+//                print(url2)
+//            }
+//        }
+//    }
+    
     app.group(AuthenticationMiddleware()) { authenticated in
         authenticated.on(.POST, "post", body: .collect(maxSize: "5mb")) { request -> EventLoopFuture<Response> in
+            listFileStructure(app.directory.publicDirectory)
+//            listDir(dir: app.directory.publicDirectory)
+            
             guard let accessToken = request.accessToken else {
                 return request.eventLoop.makeSucceededFuture(request.redirect(to: "/"))
             }
