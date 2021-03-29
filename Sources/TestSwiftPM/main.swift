@@ -6,6 +6,7 @@
 //
 
 //import Foundation
+// Reference: SPM docs.
 
 print("Test SwiftPM.")
 
