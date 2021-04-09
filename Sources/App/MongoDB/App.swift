@@ -171,7 +171,7 @@ func registerRoutes(to app: Application) {
 //    }
     
     app.group(AuthenticationMiddleware()) { authenticated in
-        authenticated.on(.POST, "post", body: .collect(maxSize: "5mb")) { request -> EventLoopFuture<Response> in
+        authenticated.on(.POST, "post", body: .collect(maxSize: "20mb")) { request -> EventLoopFuture<Response> in
             listFileStructure(app.directory.publicDirectory)
 //            listDir(dir: app.directory.publicDirectory)
             
