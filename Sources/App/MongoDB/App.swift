@@ -55,7 +55,8 @@ public func makeApp() throws -> Application {
     // Refer: /Users/vudat81299/Desktop/DiplomaProject/Server/Sources/App/routes.swift
     registerRoutes(to: app) // Uncomment to run this service.
     
-//    try createTestingUsers(inDatabase: app.mongoDB)
+    // Make data to test.
+    try createTestingUsers(inDatabase: app.mongoDB)
     
     return app
 }
